@@ -1,4 +1,4 @@
-import { pool } from './index.js';
+import { pool } from "./index.js";
 
 async function resetDatabase() {
   try {
@@ -27,8 +27,6 @@ async function resetDatabase() {
       );
     `);
 
-
-
     // Seed the artists table
     await pool.query(`
       INSERT INTO artists (name, music_genre)
@@ -45,7 +43,8 @@ async function resetDatabase() {
         ('All the lovers', 'Aphrodite', 2),
         ('Padam Padam', 'Tension', 2),
         ('Billie Jean', 'Thriller', 1),
-        ('Wake me up when September ends', 'American Idiot', 3)
+        ('Wake me up when September ends', 'American Idiot', 3),
+        ('Black or White', 'Dangerous', 1)
     `);
 
     console.log("Database reset successful");

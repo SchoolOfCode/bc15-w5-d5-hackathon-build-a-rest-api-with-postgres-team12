@@ -1,4 +1,4 @@
-import { pool } from '/index.js';
+import { pool } from './index.js';
 
 async function resetDatabase() {
   try {
@@ -13,7 +13,7 @@ async function resetDatabase() {
       CREATE TABLE artists (
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        music_genre VARCHAR(255) NOT NULL,
+        music_genre VARCHAR(255) NOT NULL
       );
     `);
 
@@ -22,7 +22,7 @@ async function resetDatabase() {
       CREATE TABLE songs (
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         song_name VARCHAR(255) NOT NULL,
-        album_name VARCHAR(255) NOT NULL
+        album_name VARCHAR(255) NOT NULL,
         artist_id INT REFERENCES artists(id)
       );
     `);

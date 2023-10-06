@@ -11,14 +11,14 @@ import {
   deleteArtistById,
 } from "./artists.js";
 
-// Import book-related helper functions
-// import {
-//   getBooks,
-//   getBookById,
-//   createBook,
-//   updateBookById,
-//   deleteBookById,
-// } from "./books.js";
+//Import song-related helper functions
+import {
+  getSongs,
+  getSongById,
+  createSong,
+  updateSongById,
+  deleteSongById,
+} from "./songs.js";
 
 // Initialize the express app
 const app = express();
@@ -82,6 +82,62 @@ app.delete("/artists/:id", async function (req, res) {
       .json({ status: "fail", data: { msg: "Artist not found" } });
   }
   res.status(200).json({ status: "success", data: artist });
+});
+
+// Song Route Handlers
+
+// Endpoint to retrieve all songs
+app.get("/songs/", async function (req, res) {
+  const songs = await getSongs();
+  res.status(200).json({ status: "success", data: songs });
+});
+
+// Endpoint to retrieve a specific song by id
+app.get("/songs/:id", async function (req, res) {
+  const id = req.params.id;
+  const song = await getSongById(id);
+  // Assume 404 status if the song is not found
+  if (!song) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Song not found" } });
+  }
+  res.status(200).json({ status: "success", data: song });
+});
+
+// Endpoint to create a new song
+app.post("/songs/", async function (req, res) {
+  const data = req.body;
+  const song = await createSong(data);
+  res.status(201).json({ status: "success", data: song });
+});
+
+// Endpoint to update a specific song by id
+app.patch("/songs/:id", async function (req, res) {
+  const id = req.params.id;
+  const data = req.body;
+  const song = await updateSongById(id, data);
+  // Assume 404 status if the song is not found
+  if (!song) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Song not found" } });
+  }
+
+  res.status(200).json({ status: "success", data: song });
+});
+
+// Endpoint to delete a specific song by id
+app.delete("/songs/:id", async function (req, res) {
+  const id = req.params.id;
+  const song = await deleteSongById(id);
+  // Assume 404 status if the song is not found
+  if (!song) {
+    return res
+      .status(404)
+      .json({ status: "fail", data: { msg: "Song not found" } });
+  }
+  res.status(200).json({ status: "success", data: song });
 });
 
 // Start the server and listen on the specified port

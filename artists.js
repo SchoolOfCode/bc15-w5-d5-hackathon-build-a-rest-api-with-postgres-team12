@@ -32,7 +32,7 @@ export async function getArtistById(id) {
 export async function createArtist(artist) {
   // Query the database to create an author and return the newly created author
   const queryText =
-    "INSERT INTO authors (first_name, last_name ) VALUES($1, $2) RETURNING *";
+    "INSERT INTO artists (name, music_genre ) VALUES($1, $2) RETURNING *";
   const values = [artist.name, artist.music_genre];
   const result = await pool.query(queryText, values);
   return result.rows[0];

@@ -87,9 +87,25 @@ app.delete("/artists/:id", async function (req, res) {
 // Song Route Handlers
 
 // Endpoint to retrieve all songs
+// app.get("/songs/", async function (req, res) {
+//   const songs = await getSongs();
+//   res.status(200).json({ status: "success", data: songs });
+// });
+
+// Endpoint to retrieve all songs Also, STRECH GOAL - SORTING FUNCTIONALITY
 app.get("/songs/", async function (req, res) {
-  const songs = await getSongs();
-  res.status(200).json({ status: "success", data: songs });
+  const sortParam = req.query.sort;
+  let sortedSongs;
+
+  if (sortParam === "song_name") {
+    const songs = await getSongs();
+    sortedSongs = songs.sort((a, b) => a.song_name.localeCompare(b.song_name));
+  } else {
+    // Handle default behavior
+    sortedSongs = await getSongs();
+  }
+
+  res.status(200).json({ status: "success", data: sortedSongs });
 });
 
 // Endpoint to retrieve a specific song by id
